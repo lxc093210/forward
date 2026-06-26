@@ -2,7 +2,7 @@ WidgetMetadata = {
   id: "my.vod.demo",
   title: "VOD 示例",
   icon: "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
-  version: "1.1.0",
+  version: "1.1.1",
   requiredVersion: "0.0.1",
   description: "VOD 模块示例，包含公开测试视频和 TV/AV 资源站清单适配",
   author: "lxc093210",
