@@ -8,9 +8,9 @@
       "title": "CMS 资源",
       "description": "从 TV/AV CMS 资源站清单中为当前影片加载播放资源",
       "requiredVersion": "0.0.1",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "lxc093210",
-      "url": "https://cdn.jsdelivr.net/gh/lxc093210/forward@main/widgets/vod.js"
+      "url": "https://raw.githubusercontent.com/lxc093210/forward/main/widgets/vod.js"
     }
   ]
 }

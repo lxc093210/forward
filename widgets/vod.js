@@ -2,7 +2,7 @@ WidgetMetadata = {
   id: "my.cms.resource",
   title: "CMS 资源",
   icon: "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
-  version: "1.0.0",
+  version: "1.0.1",
   requiredVersion: "0.0.1",
   description: "从 TV/AV CMS 资源站清单中为当前影片加载播放资源",
   author: "lxc093210",
