@@ -1,0 +1,16 @@
+{
+  "title": "我的 Forward 自用模块",
+  "description": "个人自用首页模块示例",
+  "icon": "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
+  "widgets": [
+    {
+      "id": "my.home",
+      "title": "我的主页",
+      "description": "自用首页推荐、电影、剧集、动画片单",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.0",
+      "author": "lxc093210",
+      "url": "https://cdn.jsdelivr.net/gh/lxc093210/forward@main/widgets/home.js"
+    }
+  ]
+}
