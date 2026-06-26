@@ -1,6 +1,7 @@
-WidgetMetadata = {
+var WidgetMetadata = {
   id: "my.home",
   title: "我的主页",
+  icon: "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
   version: "1.0.0",
   requiredVersion: "0.0.1",
   description: "个人自用首页模块",
@@ -13,8 +14,8 @@ WidgetMetadata = {
       functionName: "loadHome",
       params: [
         { name: "page", title: "页码", type: "page" },
-        { name: "count", title: "数量", type: "count", value: "24" },
-      ],
+        { name: "count", title: "数量", type: "count", value: "24" }
+      ]
     },
     {
       id: "movies",
@@ -22,8 +23,8 @@ WidgetMetadata = {
       functionName: "loadMovies",
       params: [
         { name: "page", title: "页码", type: "page" },
-        { name: "count", title: "数量", type: "count", value: "24" },
-      ],
+        { name: "count", title: "数量", type: "count", value: "24" }
+      ]
     },
     {
       id: "tv",
@@ -31,8 +32,8 @@ WidgetMetadata = {
       functionName: "loadTV",
       params: [
         { name: "page", title: "页码", type: "page" },
-        { name: "count", title: "数量", type: "count", value: "24" },
-      ],
+        { name: "count", title: "数量", type: "count", value: "24" }
+      ]
     },
     {
       id: "anime",
@@ -40,10 +41,10 @@ WidgetMetadata = {
       functionName: "loadAnime",
       params: [
         { name: "page", title: "页码", type: "page" },
-        { name: "count", title: "数量", type: "count", value: "24" },
-      ],
-    },
-  ],
+        { name: "count", title: "数量", type: "count", value: "24" }
+      ]
+    }
+  ]
 };
 
 var MOVIES = [
@@ -54,7 +55,7 @@ var MOVIES = [
   { id: 155, type: "tmdb", title: "The Dark Knight", mediaType: "movie" },
   { id: 19995, type: "tmdb", title: "Avatar", mediaType: "movie" },
   { id: 496243, type: "tmdb", title: "Parasite", mediaType: "movie" },
-  { id: 98, type: "tmdb", title: "Gladiator", mediaType: "movie" },
+  { id: 98, type: "tmdb", title: "Gladiator", mediaType: "movie" }
 ];
 
 var TV = [
@@ -65,7 +66,7 @@ var TV = [
   { id: 76479, type: "tmdb", title: "The Boys", mediaType: "tv" },
   { id: 94605, type: "tmdb", title: "Arcane", mediaType: "tv" },
   { id: 120089, type: "tmdb", title: "SPY x FAMILY", mediaType: "tv" },
-  { id: 1429, type: "tmdb", title: "Attack on Titan", mediaType: "tv" },
+  { id: 1429, type: "tmdb", title: "Attack on Titan", mediaType: "tv" }
 ];
 
 var ANIME = [
@@ -76,7 +77,7 @@ var ANIME = [
   { id: 65930, type: "tmdb", title: "My Hero Academia", mediaType: "tv" },
   { id: 30984, type: "tmdb", title: "Bleach", mediaType: "tv" },
   { id: 46260, type: "tmdb", title: "Naruto", mediaType: "tv" },
-  { id: 2098, type: "tmdb", title: "Batman: The Animated Series", mediaType: "tv" },
+  { id: 2098, type: "tmdb", title: "Batman: The Animated Series", mediaType: "tv" }
 ];
 
 var CUSTOM = [
@@ -93,10 +94,10 @@ var CUSTOM = [
     rating: 8.1,
     genreItems: [
       { id: "custom", title: "自定义" },
-      { id: "demo", title: "示例" },
+      { id: "demo", title: "示例" }
     ],
-    link: "sample-sintel",
-  },
+    link: "sample-sintel"
+  }
 ];
 
 async function loadHome(params) {
@@ -132,23 +133,23 @@ async function loadDetail(link) {
     backdropPaths: [
       "https://picsum.photos/seed/forward-home-still-1/1280/720",
       "https://picsum.photos/seed/forward-home-still-2/1280/720",
-      "https://picsum.photos/seed/forward-home-still-3/1280/720",
+      "https://picsum.photos/seed/forward-home-still-3/1280/720"
     ],
     trailers: [
       {
         coverUrl: "https://picsum.photos/seed/forward-home-trailer/640/360",
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      },
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      }
     ],
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     releaseDate: "2025-01-01",
     rating: 8.1,
     genreItems: [
       { id: "custom", title: "自定义" },
-      { id: "demo", title: "示例" },
+      { id: "demo", title: "示例" }
     ],
     relatedItems: MOVIES.slice(0, 3),
-    link: "sample-sintel",
+    link: "sample-sintel"
   };
 }
 

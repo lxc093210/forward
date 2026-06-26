@@ -10,7 +10,7 @@
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "lxc093210",
-      "url": "https://cdn.jsdelivr.net/gh/lxc093210/forward@main/widgets/home.js"
+      "url": "https://raw.githubusercontent.com/lxc093210/forward/main/widgets/home.js"
     }
   ]
 }
