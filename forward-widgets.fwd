@@ -1,16 +1,16 @@
 {
-  "title": "我的 Forward 自用模块",
-  "description": "个人自用首页模块示例",
+  "title": "我的 Forward VOD 模块",
+  "description": "个人自用 VOD 模块示例",
   "icon": "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
   "widgets": [
     {
-      "id": "my.home",
-      "title": "我的主页",
-      "description": "自用首页推荐、电影、剧集、动画片单",
+      "id": "my.vod.demo",
+      "title": "VOD 示例",
+      "description": "使用公开测试视频的 VOD 模块示例",
       "requiredVersion": "0.0.1",
-      "version": "1.0.1",
+      "version": "1.0.0",
       "author": "lxc093210",
-      "url": "https://raw.githubusercontent.com/lxc093210/forward/main/widgets/home.js"
+      "url": "https://raw.githubusercontent.com/lxc093210/forward/main/widgets/vod.js"
     }
   ]
 }
