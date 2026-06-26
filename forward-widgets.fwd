@@ -1,14 +1,14 @@
 {
   "title": "我的 Forward VOD 模块",
-  "description": "个人自用 VOD 模块示例",
+  "description": "个人自用 VOD 模块示例，包含 TV/AV 清单适配",
   "icon": "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
   "widgets": [
     {
       "id": "my.vod.demo",
       "title": "VOD 示例",
-      "description": "使用公开测试视频的 VOD 模块示例",
+      "description": "VOD 模块示例，包含公开测试视频和 TV/AV 资源站清单适配",
       "requiredVersion": "0.0.1",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "lxc093210",
       "url": "https://raw.githubusercontent.com/lxc093210/forward/main/widgets/vod.js"
     }
