@@ -1,4 +1,4 @@
-var WidgetMetadata = {
+WidgetMetadata = {
   id: "my.home",
   title: "我的主页",
   icon: "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
