@@ -1,269 +1,125 @@
 WidgetMetadata = {
-  id: "my.vod.demo",
-  title: "VOD 示例",
+  id: "my.cms.resource",
+  title: "CMS 资源",
   icon: "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
-  version: "1.1.1",
+  version: "1.0.0",
   requiredVersion: "0.0.1",
-  description: "VOD 模块示例，包含公开测试视频和 TV/AV 资源站清单适配",
+  description: "从 TV/AV CMS 资源站清单中为当前影片加载播放资源",
   author: "lxc093210",
   site: "https://github.com/lxc093210/forward",
-  detailCacheDuration: 60,
-  modules: [
+  globalParams: [
     {
-      id: "demoList",
-      title: "公开视频测试",
-      functionName: "loadDemoList",
-      params: [
-        {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "count",
-          title: "数量",
-          type: "count",
-          value: "24"
-        }
+      name: "group",
+      title: "资源分组",
+      type: "enumeration",
+      value: "tv",
+      enumOptions: [
+        { title: "TV", value: "tv" },
+        { title: "AV", value: "av" }
       ]
     },
     {
-      id: "tvList",
-      title: "TV 资源",
-      functionName: "loadTVList",
-      params: [
-        {
-          name: "sourceIndex",
-          title: "源序号",
-          type: "count",
-          value: "1"
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "count",
-          title: "数量",
-          type: "count",
-          value: "24"
-        }
-      ]
+      name: "sourceIndex",
+      title: "源序号",
+      type: "count",
+      value: "1"
     },
     {
-      id: "avList",
-      title: "AV 资源",
-      functionName: "loadAVList",
-      params: [
-        {
-          name: "sourceIndex",
-          title: "源序号",
-          type: "count",
-          value: "1"
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "count",
-          title: "数量",
-          type: "count",
-          value: "24"
-        }
+      name: "multiSource",
+      title: "是否启用聚合搜索",
+      type: "enumeration",
+      value: "disabled",
+      enumOptions: [
+        { title: "启用", value: "enabled" },
+        { title: "禁用", value: "disabled" }
       ]
     }
   ],
-  search: {
-    title: "搜索",
-    functionName: "search",
-    params: [
-      {
-        name: "group",
-        title: "资源组",
-        type: "enumeration",
-        value: "tv",
-        enumOptions: [
-          {
-            title: "TV",
-            value: "tv"
-          },
-          {
-            title: "AV",
-            value: "av"
-          },
-          {
-            title: "测试",
-            value: "demo"
-          }
-        ]
-      },
-      {
-        name: "sourceIndex",
-        title: "源序号",
-        type: "count",
-        value: "1"
-      },
-      {
-        name: "keyword",
-        title: "关键词",
-        type: "input"
-      },
-      {
-        name: "page",
-        title: "页码",
-        type: "page"
-      }
-    ]
-  }
+  modules: [
+    {
+      id: "loadResource",
+      title: "加载资源",
+      functionName: "loadResource",
+      type: "stream",
+      params: []
+    }
+  ]
 };
 
 var TV_SOURCE_URL = "https://raw.githubusercontent.com/fangkuia/XPTV/main/CMS/TV.json";
 var AV_SOURCE_URL = "https://raw.githubusercontent.com/fangkuia/XPTV/main/CMS/AV.json";
 
-var DEMO_VODS = [
-  {
-    id: "sintel",
-    title: "Sintel",
-    year: "2010",
-    genre: "动画 / 短片",
-    description: "Blender Foundation 公开测试短片。这个条目用于验证 Forward 的 VOD 列表、详情和播放链路。",
-    posterPath: "https://picsum.photos/seed/forward-vod-sintel-poster/600/900",
-    backdropPath: "https://picsum.photos/seed/forward-vod-sintel-backdrop/1280/720",
-    rating: 8.1,
-    episodes: [
-      {
-        title: "正片",
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
-      }
-    ]
-  },
-  {
-    id: "big-buck-bunny",
-    title: "Big Buck Bunny",
-    year: "2008",
-    genre: "动画 / 喜剧",
-    description: "公开视频示例，适合测试播放、海报和详情页展示。",
-    posterPath: "https://picsum.photos/seed/forward-vod-bunny-poster/600/900",
-    backdropPath: "https://picsum.photos/seed/forward-vod-bunny-backdrop/1280/720",
-    rating: 7.8,
-    episodes: [
-      {
-        title: "正片",
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-      }
-    ]
-  },
-  {
-    id: "elephants-dream",
-    title: "Elephants Dream",
-    year: "2006",
-    genre: "动画 / 科幻",
-    description: "公开视频示例，使用 type=url 和 loadDetail 返回可播放地址。",
-    posterPath: "https://picsum.photos/seed/forward-vod-elephant-poster/600/900",
-    backdropPath: "https://picsum.photos/seed/forward-vod-elephant-backdrop/1280/720",
-    rating: 7.2,
-    episodes: [
-      {
-        title: "正片",
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-      }
-    ]
-  }
-];
-
-async function loadDemoList(params) {
-  return paginate(DEMO_VODS.map(toDemoListItem), params);
-}
-
-async function loadTVList(params) {
-  return loadRemoteList("tv", params);
-}
-
-async function loadAVList(params) {
-  return loadRemoteList("av", params);
-}
-
-async function search(params) {
-  var group = String(params.group || "tv");
-  if (group === "demo") {
-    var keyword = String(params.keyword || "").toLowerCase();
-    var matched = DEMO_VODS.filter(function (vod) {
-      return !keyword || String(vod.title).toLowerCase().indexOf(keyword) >= 0;
-    });
-    return paginate(matched.map(toDemoListItem), params);
-  }
-  return loadRemoteList(group, params);
-}
-
-async function loadDetail(link) {
-  var parts = String(link || "").split(":");
-  if (parts.length < 3 || parts[0] !== "vod") {
-    return null;
-  }
-
-  if (parts[1] === "demo") {
-    return loadDemoDetail(parts[2]);
-  }
-
-  var group = parts[1];
-  var sourceIndex = Number(parts[2] || 1);
-  var vodId = parts.slice(3).join(":");
-  var source = await getSource(group, sourceIndex);
-  if (!source || !vodId) {
-    return null;
-  }
-
-  var data = await requestVodApi(source.api, {
-    ac: "detail",
-    ids: vodId
-  });
-  var list = data && data.list ? data.list : [];
-  if (!list.length) {
-    return null;
-  }
-
-  return toRemoteDetail(list[0], group, sourceIndex, source);
-}
-
-async function loadRemoteList(group, params) {
-  var page = Number(params.page || 1);
-  var keyword = String(params.keyword || "");
-  var sourceIndex = Number(params.sourceIndex || 1);
-  var source = await getSource(group, sourceIndex);
-  if (!source) {
+async function loadResource(params) {
+  var title = params.seriesName || params.title || "";
+  if (!title) {
     return [];
   }
 
-  var apiParams = {
-    ac: "detail",
-    pg: page
-  };
-  if (keyword) {
-    apiParams.wd = keyword;
-  }
-
-  var data = await requestVodApi(source.api, apiParams);
-  var list = data && data.list ? data.list : [];
-  return list.map(function (vod) {
-    return toRemoteListItem(vod, group, sourceIndex, source);
-  });
-}
-
-async function getSource(group, sourceIndex) {
+  var group = params.group === "av" ? "av" : "tv";
+  var sourceIndex = Number(params.sourceIndex || 1);
   var sources = await fetchSources(group);
   if (!sources.length) {
-    return null;
+    return [];
   }
-  var index = Math.max(1, sourceIndex || 1) - 1;
-  return sources[index] || sources[0];
+
+  if (params.multiSource === "enabled") {
+    return await loadFromMultipleSources(sources, title, params);
+  }
+
+  var source = sources[Math.max(1, sourceIndex) - 1] || sources[0];
+  return await loadFromSource(source, title, params);
+}
+
+async function loadFromMultipleSources(sources, title, params) {
+  var results = [];
+  var maxSources = Math.min(sources.length, 8);
+
+  for (var i = 0; i < maxSources; i++) {
+    try {
+      var items = await loadFromSource(sources[i], title, params);
+      for (var j = 0; j < items.length; j++) {
+        results.push(items[j]);
+      }
+      if (results.length >= 12) {
+        return results.slice(0, 12);
+      }
+    } catch (error) {
+      console.log("[loadFromMultipleSources] 跳过源:", sources[i].name, error.message || error);
+    }
+  }
+
+  return results;
+}
+
+async function loadFromSource(source, title, params) {
+  var data = await requestVodApi(source.api, {
+    ac: "detail",
+    wd: title,
+    pg: 1
+  });
+
+  var list = data && data.list ? data.list : [];
+  if (!list.length) {
+    return [];
+  }
+
+  var matched = findMatchedVod(list, title, params);
+  if (!matched) {
+    return [];
+  }
+
+  return parsePlayResources(matched, source, params);
 }
 
 async function fetchSources(group) {
   var url = group === "av" ? AV_SOURCE_URL : TV_SOURCE_URL;
-  var response = await Widget.http.get(url);
+  var response = await Widget.http.get(url, {
+    headers: {
+      "Accept": "application/json,text/plain,*/*",
+      "User-Agent": "ForwardWidgets/1.0.0"
+    }
+  });
+
   var data = response && response.data ? response.data : [];
   if (typeof data === "string") {
     try {
@@ -273,9 +129,11 @@ async function fetchSources(group) {
       return [];
     }
   }
+
   if (!Array.isArray(data)) {
     return [];
   }
+
   return data.filter(function (source) {
     return source && source.api;
   });
@@ -285,10 +143,11 @@ async function requestVodApi(api, params) {
   var response = await Widget.http.get(api, {
     params: params,
     headers: {
-      "User-Agent": "ForwardWidgets/1.0.0",
-      "Accept": "application/json,text/plain,*/*"
+      "Accept": "application/json,text/plain,*/*",
+      "User-Agent": "ForwardWidgets/1.0.0"
     }
   });
+
   var data = response && response.data ? response.data : {};
   if (typeof data === "string") {
     try {
@@ -298,141 +157,122 @@ async function requestVodApi(api, params) {
       return {};
     }
   }
+
   return data || {};
 }
 
-function toRemoteListItem(vod, group, sourceIndex, source) {
-  var id = String(vod.vod_id || vod.id || "");
-  return {
-    id: id,
-    type: "url",
-    title: vod.vod_name || vod.name || "未命名",
-    description: cleanText(vod.vod_blurb || vod.vod_content || ""),
-    posterPath: vod.vod_pic || "",
-    backdropPath: vod.vod_pic_slide || vod.vod_pic || "",
-    releaseDate: String(vod.vod_year || ""),
-    mediaType: guessMediaType(vod),
-    rating: Number(vod.vod_score || 0),
-    genreTitle: vod.type_name || source.name || "",
-    link: "vod:" + group + ":" + sourceIndex + ":" + id
-  };
+function findMatchedVod(list, title, params) {
+  var target = normalizeTitle(title);
+  var type = params.type || "";
+
+  var exact = list.find(function (item) {
+    return normalizeTitle(item.vod_name || item.name || "") === target;
+  });
+  if (exact) {
+    return exact;
+  }
+
+  var contains = list.find(function (item) {
+    var itemTitle = normalizeTitle(item.vod_name || item.name || "");
+    if (!itemTitle || itemTitle.indexOf(target) < 0) {
+      return false;
+    }
+    if (type === "movie") {
+      return guessMediaType(item) === "movie";
+    }
+    if (type === "tv") {
+      return guessMediaType(item) === "tv";
+    }
+    return true;
+  });
+  if (contains) {
+    return contains;
+  }
+
+  return list[0];
 }
 
-function toRemoteDetail(vod, group, sourceIndex, source) {
-  var item = toRemoteListItem(vod, group, sourceIndex, source);
-  var episodeItems = parseEpisodes(vod, item.mediaType);
-  item.description = cleanText(vod.vod_content || vod.vod_blurb || "");
-  item.detailPoster = item.posterPath;
-  item.backdropPaths = [
-    item.backdropPath || item.posterPath
-  ].filter(Boolean);
-  item.episodeItems = episodeItems;
-  item.videoUrl = episodeItems.length ? episodeItems[0].videoUrl : "";
-  item.playerType = "system";
-  return item;
-}
-
-function parseEpisodes(vod, mediaType) {
+function parsePlayResources(vod, source, params) {
   var playUrl = String(vod.vod_play_url || "");
   var playFrom = String(vod.vod_play_from || "");
+  if (!playUrl) {
+    return [];
+  }
+
+  var mediaType = params.type || guessMediaType(vod);
+  var targetEpisode = mediaType === "movie" ? 1 : Number(params.episode || 1);
   var groups = playUrl.split("$$$");
   var froms = playFrom.split("$$$");
-  var episodes = [];
+  var resources = [];
 
   for (var groupIndex = 0; groupIndex < groups.length; groupIndex++) {
-    var groupName = froms[groupIndex] || "播放";
+    var lineName = froms[groupIndex] || "播放";
     var entries = groups[groupIndex].split("#");
     for (var i = 0; i < entries.length; i++) {
-      var entry = entries[i];
-      if (!entry) {
+      var parsed = parsePlayEntry(entries[i], i + 1);
+      if (!parsed.url) {
         continue;
       }
-      var dollarIndex = entry.indexOf("$");
-      var title = dollarIndex >= 0 ? entry.slice(0, dollarIndex) : "第 " + (i + 1) + " 集";
-      var url = dollarIndex >= 0 ? entry.slice(dollarIndex + 1) : entry;
-      if (!url) {
+      if (mediaType !== "movie" && !isEpisodeMatch(parsed.title, i + 1, targetEpisode)) {
         continue;
       }
-      episodes.push({
-        id: String(vod.vod_id || "") + "-" + groupIndex + "-" + i,
-        type: "url",
-        title: groups.length > 1 ? groupName + " · " + title : title,
-        mediaType: mediaType,
-        episode: i + 1,
-        videoUrl: url,
-        playerType: "system"
+
+      resources.push({
+        name: buildResourceName(source.name, lineName, parsed.title),
+        description: cleanText(vod.vod_name || "") + "\n" + cleanText(vod.type_name || ""),
+        url: parsed.url
       });
     }
   }
 
-  return episodes;
+  return resources;
 }
 
-function toDemoListItem(vod) {
-  return {
-    id: vod.id,
-    type: "url",
-    title: vod.title,
-    description: vod.description,
-    posterPath: vod.posterPath,
-    backdropPath: vod.backdropPath,
-    releaseDate: vod.year,
-    mediaType: "movie",
-    rating: vod.rating,
-    genreTitle: vod.genre,
-    link: "vod:demo:" + vod.id
-  };
-}
+function parsePlayEntry(entry, fallbackEpisode) {
+  var text = String(entry || "");
+  if (!text) {
+    return { title: "", url: "" };
+  }
 
-function loadDemoDetail(id) {
-  var vod = findDemoVod(id);
-  if (!vod) {
-    return null;
+  var dollarIndex = text.indexOf("$");
+  if (dollarIndex < 0) {
+    return {
+      title: "第" + fallbackEpisode + "集",
+      url: text
+    };
   }
 
   return {
-    id: vod.id,
-    type: "url",
-    title: vod.title,
-    description: vod.description,
-    posterPath: vod.posterPath,
-    detailPoster: vod.posterPath,
-    backdropPath: vod.backdropPath,
-    backdropPaths: [
-      vod.backdropPath,
-      "https://picsum.photos/seed/forward-vod-" + vod.id + "-still-1/1280/720",
-      "https://picsum.photos/seed/forward-vod-" + vod.id + "-still-2/1280/720"
-    ],
-    releaseDate: vod.year,
-    mediaType: "movie",
-    rating: vod.rating,
-    genreTitle: vod.genre,
-    episodeItems: vod.episodes.map(function (episode, index) {
-      return {
-        id: vod.id + "-" + index,
-        type: "url",
-        title: episode.title,
-        mediaType: "movie",
-        episode: index + 1,
-        videoUrl: episode.url,
-        playerType: "system"
-      };
-    }),
-    videoUrl: vod.episodes[0] ? vod.episodes[0].url : "",
-    relatedItems: DEMO_VODS.filter(function (item) {
-      return item.id !== vod.id;
-    }).map(toDemoListItem),
-    link: "vod:demo:" + vod.id
+    title: text.slice(0, dollarIndex) || "第" + fallbackEpisode + "集",
+    url: text.slice(dollarIndex + 1)
   };
 }
 
-function findDemoVod(id) {
-  for (var i = 0; i < DEMO_VODS.length; i++) {
-    if (DEMO_VODS[i].id === id) {
-      return DEMO_VODS[i];
-    }
+function isEpisodeMatch(title, fallbackEpisode, targetEpisode) {
+  if (!targetEpisode) {
+    return true;
   }
-  return null;
+
+  var text = String(title || "");
+  var numbers = text.match(/\d+/g);
+  if (numbers && numbers.length) {
+    return Number(numbers[numbers.length - 1]) === Number(targetEpisode);
+  }
+
+  return Number(fallbackEpisode) === Number(targetEpisode);
+}
+
+function buildResourceName(sourceName, lineName, episodeTitle) {
+  var name = String(sourceName || "CMS").replace(/\|点播|\|AV/g, "");
+  var parts = [name, lineName, episodeTitle].filter(Boolean);
+  return parts.join(" · ");
+}
+
+function normalizeTitle(title) {
+  return String(title || "")
+    .replace(/第[一二三四五六七八九十0-9]+季/g, "")
+    .replace(/[\s：:·\-\.!！?？\/\\_]/g, "")
+    .toLowerCase();
 }
 
 function guessMediaType(vod) {
@@ -445,11 +285,4 @@ function guessMediaType(vod) {
 
 function cleanText(text) {
   return String(text || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
-}
-
-function paginate(items, params) {
-  var page = Number(params && params.page ? params.page : 1);
-  var count = Number(params && params.count ? params.count : 24);
-  var start = (page - 1) * count;
-  return items.slice(start, start + count);
 }

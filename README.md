@@ -1,6 +1,6 @@
-# Forward VOD 示例模块
+# Forward CMS 资源模块
 
-这是一个给 Forward 使用的 VOD 示例模块，使用公开测试视频验证列表、详情和播放链路。
+这是一个给 Forward 使用的资源模块，按照 `type: "stream"` 的方式为当前影片加载播放资源。
 
 ## 订阅地址
 
@@ -10,29 +10,22 @@ https://raw.githubusercontent.com/lxc093210/forward/main/forward-widgets.fwd
 
 ## 模块内容
 
-- 测试片源列表
-- 搜索
-- 详情页
-- episodeItems 播放列表
-- videoUrl 直链播放
+- 加载资源
+- 支持 TV / AV 两个资源站清单
+- 支持单源或聚合搜索
 
-## 修改片源
+## 使用方式
 
-编辑 `widgets/vod.js` 里的 `VODS` 数组。
+在 Forward 的资源模块里添加订阅：
 
-主要改：
-
-```js
-{
-  id: "sample",
-  title: "标题",
-  year: "2026",
-  genre: "电影",
-  description: "简介",
-  posterPath: "竖版封面地址",
-  backdropPath: "横版封面地址",
-  episodes: [
-    { title: "第1集", url: "视频直链" }
-  ]
-}
+```text
+https://cdn.jsdelivr.net/gh/lxc093210/forward@main/forward-widgets.json
 ```
+
+然后在影片详情页使用资源模块的“加载资源”。
+
+## 全局参数
+
+- `资源分组`：TV 或 AV
+- `源序号`：使用资源站清单里的第几个源
+- `是否启用聚合搜索`：启用后会依次尝试前几个源

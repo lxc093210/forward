@@ -1,14 +1,14 @@
 {
-  "title": "我的 Forward VOD 模块",
-  "description": "个人自用 VOD 模块示例，包含 TV/AV 清单适配",
+  "title": "我的 Forward 资源模块",
+  "description": "从 TV/AV CMS 清单中为当前影片加载播放资源",
   "icon": "https://raw.githubusercontent.com/InchStudio/ForwardWidgets/master/icon.png",
   "widgets": [
     {
-      "id": "my.vod.demo",
-      "title": "VOD 示例",
-      "description": "VOD 模块示例，包含公开测试视频和 TV/AV 资源站清单适配",
+      "id": "my.cms.resource",
+      "title": "CMS 资源",
+      "description": "从 TV/AV CMS 资源站清单中为当前影片加载播放资源",
       "requiredVersion": "0.0.1",
-      "version": "1.1.1",
+      "version": "1.0.0",
       "author": "lxc093210",
       "url": "https://cdn.jsdelivr.net/gh/lxc093210/forward@main/widgets/vod.js"
     }
