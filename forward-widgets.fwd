@@ -8,7 +8,7 @@
       "title": "我的主页",
       "description": "自用首页推荐、电影、剧集、动画片单",
       "requiredVersion": "0.0.1",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "lxc093210",
       "url": "https://raw.githubusercontent.com/lxc093210/forward/main/widgets/home.js"
     }
